@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Market</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script>
+	var socket = new SockJS("/broadcst");
+	var stompClient = Stomp.over(socket);
+
+	stompClient.connect({}, function(frame) {
+		console.log('Connected: ' + frame);
+		stompClient.subscribe('/topic/market', function(trade){add(trade)});
+	})
+
+	function add(trade) {
+		var d = document.getElementById('listTrades');
+		var li = document.createElement('li');
+		li.innerHTML = trade.body;
+		d.appendChild(li)
+	}
+	function send(trade) {
+		var response = document.getElementById('response');
+		document.getElementById('response').innerHTML = '';
+		var p = document.createElement('p');
+		p.style.wordWrap = 'break-word';
+		p.appendChild(document.createTextNode(trade));
+		response.append(p);
+	}
+
+</script>
+</head>
+<body>
+<h1>Trading broadcast</h1>
+<ul id="listTrades">
+</ul>
+</body>
+</html>
