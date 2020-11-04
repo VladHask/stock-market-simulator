@@ -1,5 +1,6 @@
 # stock-market-simulator
-Simple market simulator with limit orders.
+Simple market simulator with limit orders. 
+Java, Spring Boot, REST, Websockets (with STOMP and Sockjs)
 
 
 For web-socket trade broadcast:
